@@ -1,14 +1,13 @@
-# 🏁 F1 Live Strategy Simulator - Simulación de Sistemas Híbridos
-### Trabajo Práctico Grupal - Materia: Simulación de Sistemas
-#### Universidad del Centro de Estudios Macroeconómicos de Argentina (UCEMA)
+# 🏁 F1 Strategy Simulator - Simulación de Sistemas 
+### Trabajo Práctico Grupal - ININF UCEMA
 
 Este proyecto consiste en un simulador interactivo en tiempo real desarrollado en Python utilizando la librería **Streamlit** y gráficos interactivos con **Plotly**. El objetivo principal es modelar y analizar el comportamiento dinámico de una estrategia de carrera de Fórmula 1, combinando componentes de simulación continua, eventos discretos y teoría de colas.
 
 ---
 
-## 🏛️ Estructura de la Simulación Híbrida
+## 🏛️ Estructura de la Simulación
 
-En el deporte motor moderno, el rendimiento del vehículo y las operaciones en boxes son ejemplos clásicos de sistemas híbridos donde coexisten procesos de cambio constante y eventos abruptos:
+En la F1, el rendimiento del vehículo y las operaciones en boxes son ejemplos clásicos de sistemas híbridos donde coexisten procesos de cambio constante y eventos abruptos:
 
 ### 1. Componente Continuo (Dinámica de Sistemas)
 * **Degradación del Neumático ($Grip\,\%$)**: El porcentaje de agarre inyectado en pista disminuye de forma continua según una función de decaimiento exponencial:
@@ -33,8 +32,6 @@ En el deporte motor moderno, el rendimiento del vehículo y las operaciones en b
 
 ## 📁 Estructura del Proyecto
 
-El código está estructurado de manera modular y limpia en el siguiente árbol de directorios:
-
 ```text
 tp-simulacion/
 ├── app.py                # Interfaz principal Streamlit y bucle de animación
@@ -46,26 +43,26 @@ tp-simulacion/
 ├── requirements.txt      # Dependencias del entorno de simulación
 └── README.md             # Documentación del Trabajo Práctico (UCEMA)
 ```
-
 ---
 
 ## 🚀 Instalación y Ejecución
 
-Sigue estos pasos para levantar la simulación interactiva localmente:
-
 ### 1. Clonar o acceder al repositorio
+
 Asegúrate de estar en el directorio del proyecto:
 ```bash
-cd /usr/local/google/home/camilacodina/Desktop/tp-simulacion
+cd /(...)/tp-simulacion
 ```
 
 ### 2. Instalar dependencias
+
 Se recomienda utilizar un entorno virtual de Python. Puedes instalar los paquetes requeridos directamente usando:
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 3. Ejecutar la aplicación de Streamlit
+
 Inicia el servidor local de visualización:
 ```bash
 streamlit run app.py
