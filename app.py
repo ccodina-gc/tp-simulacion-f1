@@ -291,7 +291,7 @@ def main():
 
         # 2. EVENTO DISCRETO Y COLA M/M/1 EN VUELTA PROGRAMADA
         if v == vuelta_parada:
-            registro_eventos.append(f"🏎️ [VUELTA {v}] ¡BOX BOX BOX! Entrando a Pit Lane para cambio de compuestos.")
+            registro_eventos.append(f"🏎️ [VUELTA {v}] ¡BOX BOX! Entrando a Pit Lane para cambio de compuestos.")
             
             # Verificación de Inventario
             asignado = inventario.usar_compuesto(compuesto_parada)
@@ -317,7 +317,7 @@ def main():
                 # Log de sucesos
                 if rep1.falla_ocurrida:
                     estado_box_clase = "box-status-falla"
-                    estado_box_str = "FALLA EN PISTOLA"
+                    estado_box_str = "FALLA EN PIT"
                 registro_eventos.append(f"⏱️ [BOX AUTO 1] {rep1.mensaje_alerta} (Total Box: {rep1.tiempo_total_box}s)")
                 
                 registro_eventos.append(f"⏳ [COLA M/M/1] Auto 2 esperó {rep2.tiempo_espera_cola}s en la cola virtual del Pit Box.")
@@ -370,13 +370,13 @@ def main():
         pit_box.liberar()
 
     progreso_barra.empty()
-    st.success("🏁 **¡BANDERAZO A CUADROS! SIMULACIÓN DE CARRERA COMPLETADA CON ÉXITO.**")
+    st.success("🏁 **SIMULACIÓN DE CARRERA COMPLETADA**")
 
     # ==========================================
     # REPORTE Y RESUMEN FINAL DE CARRERA
     # ==========================================
     st.markdown("---")
-    st.header("🏆 REPORTE ESTADÍSTICO Y ANÁLISIS ESTRATÉGICO FINAL")
+    st.header("🏆 REPORTE FINAL")
     
     t1, t2, t3 = st.tabs(["📊 Resumen General de Carrera", "📦 Inventario Final", "🎓 Explicación Teórica: Variables Continuas & DES"])
     
