@@ -7,6 +7,7 @@ class ReporteParada:
     auto_id: str
     compuesto_colocado: str
     tiempo_servicio_base: float
+    tiempo_pit_lane: float
     tiempo_espera_cola: float
     tiempo_falla: float
     tiempo_total_box: float
@@ -34,11 +35,16 @@ class PitBoxServidor:
         self.ocupado = True
         self.estado_box = "Ocupado"
         
-        tiempo_base = round(random.uniform(2.2, 2.8), 2) # Servicio óptimo normal de F1
+        tiempo_base = round(random.uniform(2.2, 2.8), 2) # Servicio óptimo normal de F1 (auto detenido)
+
+        # Pérdida en pit lane: tiempo perdido recorriendo el pit lane a velocidad limitada
+        # (vs. seguir en pista). Generado por Monte Carlo igual que el cambio de neumáticos.
+        tiempo_pit_lane = round(random.uniform(18.0, 22.0), 2) # Distribución Uniforme(18, 22)
+
         falla = False
         tiempo_falla = 0.0
-        mensaje = f"Parada rápida de {tiempo_base}s para colocar {compuesto_nombre}."
-        
+        mensaje = f"Parada de {tiempo_base}s en boxes (+{tiempo_pit_lane}s de pit lane) para colocar {compuesto_nombre}."
+
         # Tirada estocástica (Monte Carlo) para falla de pistola neumática
         if random.random() < self.prob_falla:
             falla = True
@@ -46,13 +52,14 @@ class PitBoxServidor:
             # Distribución Uniforme entre 4 y 10 segundos adicionales de demora
             tiempo_falla = round(random.uniform(4.0, 10.0), 2)
             mensaje = f"¡ALERTA! Tuerca trabada en pistola neumática. Demora extra de +{tiempo_falla}s."
-            
-        tiempo_total = round(tiempo_base + tiempo_espera_previo + tiempo_falla, 2)
-        
+
+        tiempo_total = round(tiempo_base + tiempo_pit_lane + tiempo_espera_previo + tiempo_falla, 2)
+
         return ReporteParada(
             auto_id=auto_id,
             compuesto_colocado=compuesto_nombre,
             tiempo_servicio_base=tiempo_base,
+            tiempo_pit_lane=tiempo_pit_lane,
             tiempo_espera_cola=tiempo_espera_previo,
             tiempo_falla=tiempo_falla,
             tiempo_total_box=tiempo_total,
@@ -70,8 +77,9 @@ class PitBoxServidor:
         # Atendemos primero al Auto 1 (Líder en pista)
         rep1 = self.realizar_parada("Auto 1 (Líder)", compuesto_auto1, tiempo_espera_previo=0.0)
         
-        # El tiempo de servicio total del Auto 1 se convierte en el tiempo de espera en cola del Auto 2
-        espera_auto2 = rep1.tiempo_total_box
+        # El Auto 2 sólo espera a que se libere el servidor (el box físico): servicio + falla.
+        # NO incluye el pit lane, que cada auto recorre por su cuenta (no es ocupación del box).
+        espera_auto2 = round(rep1.tiempo_servicio_base + rep1.tiempo_falla, 2)
         
         # Atendemos al Auto 2
         rep2 = self.realizar_parada("Auto 2 (Escudero)", compuesto_auto2, tiempo_espera_previo=espera_auto2)
